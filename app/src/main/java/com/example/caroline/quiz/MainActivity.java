@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         wireWidgets();
+        onClickListeners();
+        createQuestions();
     }
 
     private void onClickListeners(){
@@ -27,15 +29,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextButton.setOnClickListener(this);
     }
 
-    private void createQuestions(){
-        questionList.add(new Question("The annual French bike competition is called Le Voyage de France", false));
-        questionList.add(new Question("Is it legal for the man to marry his widow's sister in Germany?", false));
-        questionList.add(new Question("The Holy See is a country in it's own right.", true));
-        questionList.add(new Question("Potatoes include a poison known as solanine that can kill you if you pet them.", true));
-        questionList.add(new Question("Were lobsters used as fertiliser and pig feed in the 19th century?", true));
-        questionList.add(new Question("There is a cannibal living free and with celebrity status in Japan.", false));
-        questionList.add(new Question("The LSD sect of Christianity practices cult-like behaviour.", false));
-        questionList.add(new Question("Austria is different from Australia.", true));
+    private void createQuestions(){ //link tags
+        questionList.add(new Question(getString(R.string.bike_competition), false));
+        questionList.add(new Question(getString(R.string.legal_widow), false));
+        questionList.add(new Question(getString(R.string.Holy_See), true));
+        questionList.add(new Question(getString(R.string.potato_poison), true));
+        questionList.add(new Question(getString(R.string.lobster), true));
+        questionList.add(new Question(getString(R.string.Japanese_cannibal), false));
+        questionList.add(new Question(getString(R.string.LSD), false));
+        questionList.add(new Question(getString(R.string.countries), true));
     }
 
     private void wireWidgets() {
@@ -43,10 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         falseAns = (Button) findViewById(R.id.button_false);
         nextButton = (Button) findViewById(R.id.button_next_question);
         question = (TextView) findViewById(R.id.text_view_text_question);
-    }
-
-    public void checkAnswer(){
-        //check answers against the arraylist
     }
 
     @Override

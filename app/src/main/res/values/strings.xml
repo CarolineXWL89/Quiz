@@ -2,4 +2,12 @@
     <string name="app_name">Quiz</string>
     <string name="true_text">True</string>
     <string name="false_text">False</string>
+    <string name= "bike_competition">The annual French bike competition is called Le Voyage de France</string>
+    <string name= "legal_widow">Is it legal for the man to marry his widow\'s sister in Germany?</string>
+    <string name= "Holy_See">The Holy See is a country in it\'s own right.</string>
+    <string name= "potato_poison">Potatoes include a poison known as solanine that can kill you if you pet them.</string>
+    <string name= "lobster">Were lobsters used as fertiliser and pig feed in the 19th century?</string>
+    <string name= "Japanese_cannibal">There is a cannibal living free and with celebrity status in Japan.</string>
+    <string name= "LSD">The LSD sect of Christianity practices cult-like behaviour.</string>
+    <string name= "countries">Austria is different from Australia.</string>
 </resources>

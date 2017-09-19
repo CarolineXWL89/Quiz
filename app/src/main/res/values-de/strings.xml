@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Die Klassenarbeit von Richtig oder Falsch</string>
+    <string name="false_text">Falsch</string>
+    <string name="true_text">Wahr</string>
+</resources>
