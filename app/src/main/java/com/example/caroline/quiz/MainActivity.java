@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView question;
+    private TextView questionText;
     private Button trueAns, falseAns, nextButton;
     private ArrayList<Question> questionList = new ArrayList();
+    private String question;
+    private int qNum = 0;
+    private Question q;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,21 +48,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trueAns = (Button) findViewById(R.id.button_true);
         falseAns = (Button) findViewById(R.id.button_false);
         nextButton = (Button) findViewById(R.id.button_next_question);
-        question = (TextView) findViewById(R.id.text_view_text_question);
+        questionText = (TextView) findViewById(R.id.text_view_text_question);
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.button_true:
-                checkAnswer();
+                String yN = checkAnswer(true);
+                Toast.makeText(this, yN, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_false:
-                checkAnswer();
+                String yn = checkAnswer(false);
+                Toast.makeText(this, yn, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_next_question:
-
+                switchQuestion(qNum);
                 break;
         }
+    }
+
+    public String checkAnswer(boolean correct) {
+        q = questionList.get(qNum);
+        boolean tF = q.isAnswer();
+        if (correct == tF) {
+            qNum++;
+            return "You're correct!";
+        } else {
+            qNum++;
+            return "Wrong!!!";
+        }
+    }
+
+    public Question switchQuestion(int qNum){
+        question = questionList.get(qNum).getQuestion();
+        q = questionList.get(qNum);
+        return q;
     }
 }
