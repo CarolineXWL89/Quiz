@@ -2,6 +2,7 @@ package com.example.caroline.quiz;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String question;
     private int qNum = 0;
     private Question q;
+
+    public static final String TAG = "MainActivity"; //TAG helps send things to log b/c convenetion
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,4 +88,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         q = questionList.get(qNum);
         return q;
     }
+
+    //Android Lifecycle Methods
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: method fired");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: method fired");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: method fired");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: method fired");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: method fired");
+    }
+
+
 }
