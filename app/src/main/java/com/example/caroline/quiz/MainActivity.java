@@ -1,5 +1,6 @@
 package com.example.caroline.quiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,13 +14,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView questionText;
-    private Button trueAns, falseAns, nextButton;
+    private Button trueAns, falseAns, nextButton, switchActivity;
     private ArrayList<Question> questionList = new ArrayList();
-    private String question;
+    //private String question;
     private int qNum = 0;
     private Question q;
 
-    public static final String TAG = "MainActivity"; //TAG helps send things to log b/c convenetion
+    public static final String FINAL_SCORE = "finalScore";
+    public static final String TAG = "MainActivity"; //TAG helps send things to log b/c convention
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +30,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wireWidgets();
         onClickListeners();
         createQuestions();
+
+
+
+        //check if we're resuming from a previous state
+        if(savedInstanceState != null){
+            qNum = savedInstanceState.getInt("question number", 0);
+        }
+        //load first question
+        questionText.setText(questionList.get(qNum).getQuestion());
     }
 
     private void onClickListeners(){
         trueAns.setOnClickListener(this);
         falseAns.setOnClickListener(this);
         nextButton.setOnClickListener(this);
+        switchActivity.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                /*to change activiities, you make an Intent
+                The intent describes where you're coming from, where you're going, and what if any info you're taking with you.
+                */
+                Intent i = new Intent(MainActivity.this, ScoreActivity.class);
+                //packing our bags - putting data into the intent
+                i.putExtra("message1", "Hello from main activity");
+                //once the bags are packed, start the trip
+                startActivity(i);
+            }
+        });
+
     }
 
     private void createQuestions(){ //link tags
@@ -52,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         falseAns = (Button) findViewById(R.id.button_false);
         nextButton = (Button) findViewById(R.id.button_next_question);
         questionText = (TextView) findViewById(R.id.text_view_text_question);
+        switchActivity = (Button) findViewById(R.id.button_switch_activity);
+
     }
 
     @Override
@@ -68,9 +95,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_next_question:
                 switchQuestion(qNum);
                 break;
+            case R.id.button_switch_activity:
+
+                break;
         }
     }
 
+    /**
+     * Checks the input answer against the real answer
+     * @param correct User answer from the buttons
+     * @return a string to make into a toast
+     */
     public String checkAnswer(boolean correct) {
         q = questionList.get(qNum);
         boolean tF = q.isAnswer();
@@ -83,9 +118,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Returns the next question
+     * @param qNum is the current number you're on
+     * @return the question the next question is supposed to be
+     */
     public Question switchQuestion(int qNum){
-        question = questionList.get(qNum).getQuestion();
-        q = questionList.get(qNum);
+        //question = questionList.get(qNum).getQuestion();
+        q = questionList.get(qNum + 1);
         return q;
     }
 
@@ -120,5 +160,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "onResume: method fired");
     }
 
+    //To prevent resetting during rotation, we use SavedInstaceState 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: method fired");
+        //saves the current question number
+        outState.putInt("question number", qNum);
+    }
 }
